@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import Songs from '../components/Songs';
-
-const fakeAlbum = {
-  name: 'Yellow Submarine',
-  id: 2,
-  imageUrl: 'http://fillmurray.com/300/300',
-  songs: [
-    {
-      id: 4,
-      name: 'London Calling',
-      artists: [
-        { name: 'Bill' }
-      ],
-      genre: 'Punk',
-      audioUrl: 'https://learndotresources.s3.amazonaws.com/workshop/5616dbe5a561920300b10cd7/Dexter_Britain_-_03_-_The_Stars_Are_Out_Interlude.mp3'
-    }
-  ]
-};
+import axios from 'axios';
 
 export default class SingleAlbum extends Component {
+  constructor() {
+    super();
+    this.state = {
+      selectedAlbum: {}
+    }
+  }
+
+  componentDidMount () {
+    axios.get(`/api/albums/${+this.props.match.params.albumId}`)
+      .then(res => res.data)
+      .then(album => this.setState({
+        selectedAlbum: album
+      }));
+  }
+
   render () {
-    const album = fakeAlbum;
+    const album = this.state.selectedAlbum;
 
     return (
       <div className="album">

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 
@@ -30,7 +31,7 @@ export default class AllAlbums extends Component {
         {
           albums.map(album => (
             <div className="col-xs-4" key={ album.id }>
-              <a className="thumbnail" href="#" onClick={() => selectAlbum(album.id)}>
+              <Link to={`/albums/${album.id}`} className="thumbnail">
                 <img src={ album.imageUrl } />
                 <div className="caption">
                   <h5>
@@ -38,7 +39,7 @@ export default class AllAlbums extends Component {
                   </h5>
                   <small>{ album.songs.length } songs</small>
                 </div>
-              </a>
+              </Link>
             </div>
           ))
         }
