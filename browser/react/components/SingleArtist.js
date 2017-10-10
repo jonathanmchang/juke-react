@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Songs from '../components/Songs';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Route, NavLink } from 'react-router-dom';
 import AllAlbums from './AllAlbums';
 
 export default class SingleArtist extends Component {
@@ -53,15 +53,26 @@ export default class SingleArtist extends Component {
     }
 
     render() {
-        console.log(this.state)
-        return (
+        const artist = this.state.selectedArtist;
+        const artistId = this.state.selectedArtist.id 
+        const albumRoute = `/artists/${artistId}/albums`
+        const songRoute = `/artists/${artistId}/songs`
+          return (
             <div>
-                <h3>{this.state.selectedArtist.name}</h3>
-                <h4>Albums</h4>
-                <AllAlbums albums={this.state.selectedArtistAlbums} />
-                <h4>Songs</h4>
-                <Songs songs={this.state.selectedArtistSongs}/>
+              <h3>{ artist.name }</h3>
+              <ul className="nav nav-tabs">
+                <li><NavLink to={albumRoute} activeClassName="active">ALBUMS</NavLink></li>
+                <li><NavLink to={songRoute} activeClassName="active">SONGS</NavLink></li>
+              </ul>
+        
+              {
+                <div>
+                    <Route path={albumRoute} render = {() => <AllAlbums albums = {this.state.selectedArtistAlbums}/>}/>
+                    <Route path={songRoute} render = {() => <Songs songs = {this.state.selectedArtistSongs}/>}/>  
+                </div>
+                }
             </div>
-        )
+          );
+        
     }
 }

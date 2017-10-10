@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Songs from '../components/Songs';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Path from 'path'; 
+
+const test = Path.dirname()
 
 export default class SingleAlbum extends Component {
   constructor() {
@@ -20,11 +24,20 @@ export default class SingleAlbum extends Component {
 
   render () {
     const album = this.state.selectedAlbum;
-
+    console.log(this.props)
+    console.log('***dirname: ',test)
     return (
       <div className="album">
         <div>
-          <h3>{ album.name }</h3>
+          <h3>
+            { album.name }&nbsp;
+            <a href={`mailto:?subject=${album.name}&body=Check out this album http://${window.location.host}/#${this.props.location.pathname}`}>
+              <button className="btn btn-default btn-xs">
+                <span className="glyphicon glyphicon-share">
+                </span>
+              </button>
+            </a>  
+          </h3>
           <img src={ album.imageUrl } className="img-thumbnail" />
         </div>
         <Songs songs={album.songs} />
