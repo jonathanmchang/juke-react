@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Songs from '../components/Songs';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import AllAlbums from './AllAlbums';
 
 export default class SingleArtist extends Component {
     constructor() {
@@ -56,23 +57,9 @@ export default class SingleArtist extends Component {
         return (
             <div>
                 <h3>{this.state.selectedArtist.name}</h3>
-                <div className="col-xs-10">
-                    <h4>Albums</h4>
-                    {this.state.selectedArtistAlbums.map(album => (
-                        <div className="col-xs-4" key={ album.id }>
-                        <Link to={`/albums/${album.id}`} className="thumbnail">
-                            <img src={ album.imageUrl } />
-                            <div className="caption">
-                            <h5>
-                                <span>{ album.name }</span>
-                            </h5>
-                            <small>{ album.songs.length } songs</small>
-                            </div>
-                        </Link>
-                        </div>
-                    ))}
-                  </div>
-                <h4>SONGS</h4>
+                <h4>Albums</h4>
+                <AllAlbums albums={this.state.selectedArtistAlbums} />
+                <h4>Songs</h4>
                 <Songs songs={this.state.selectedArtistSongs}/>
             </div>
         )
